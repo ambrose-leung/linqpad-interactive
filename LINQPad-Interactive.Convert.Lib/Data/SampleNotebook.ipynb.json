@@ -1,0 +1,71 @@
+﻿{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "dotnet_interactive": {
+     "language": "csharp"
+    },
+    "generatedWith": "LINQPad-Interactive.Convert.Lib"
+   },
+   "outputs": [],
+   "source": [
+    "#r \"nuget:LINQPad.Runtime, 6.14.10\"\n",
+    "using LINQPad;\n",
+    "using Microsoft.AspNetCore.Html;\n",
+    "\n",
+    "public static void Dump<T>(this T objectToSerialize)\n",
+    "{\n",
+    "    var writer = LINQPad.Util.CreateXhtmlWriter(true);\n",
+    "    writer.Write(objectToSerialize);\n",
+    "    string strHTML = writer.ToString();\n",
+    "    \n",
+    "    display(new HtmlString(strHTML.Replace(\"background:white\",\"\").Replace(\"background-color:#ddd;\",\"\")));\n",
+    "}"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "dotnet_interactive": {
+     "language": "csharp"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "var myDict = new Dictionary<string, object>();\n",
+    "myDict[\"asdf\"] = new string[]{\"aadfgadfgadfgadfhaadfgadfgadfg\",\"adfhaadfgadfgadfgadfhaadfgadfgadfgadfhaadfgadfgadfgadf\",\"haadfgadfgadfgadfhaadfgadfgadfgadfhaadfgagadfhaadfgadfgadfgadfh\"};\n",
+    "\n",
+    "myDict.Dump();\n",
+    "\n",
+    "int i=1234;\n",
+    "Console.WriteLine(i);\n",
+    "\n",
+    "// dynamic dump = LINQPad.Util.CreateXhtmlWriter();\n",
+    "\n",
+    "// dump.Write(myDict);\n",
+    "\n",
+    "// new HtmlString(dump.ToString().Replace(\"background:white\",\"\").Replace(\"background-color:#ddd;\",\"\"))"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": ".NET (C#)",
+   "language": "C#",
+   "name": ".net-csharp"
+  },
+  "language_info": {
+   "file_extension": ".cs",
+   "mimetype": "text/x-csharp",
+   "name": "C#",
+   "pygments_lexer": "csharp",
+   "version": "9.0"
+  },
+  "orig_nbformat": 2
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

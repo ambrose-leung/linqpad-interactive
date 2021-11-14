@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>LINQPad_Interactive.Convert.Lib</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Data\InteractiveNotebookBootstrap.txt" />
+    <None Remove="Data\SampleNotebook.ipynb.json" />
+    <None Remove="SampleNotebook.ipynb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Data\InteractiveNotebookBootstrap.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\SampleNotebook.ipynb.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="InteractiveNotebookJson.cs">
+    </Resource>
+    <Resource Include="SampleNotebook.ipynb" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="ConvertStatus.cs">
+    </Compile>
+  </ItemGroup>
+
+</Project>
