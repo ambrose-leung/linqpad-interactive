@@ -47,7 +47,7 @@ namespace LINQPad_Interactive.Convert.Lib
                 notebookObj.cells[0].source = ConvertCodeToInteractiveNotebookFormat(codeForInteractiveNotebook.ToString());
                 notebookObj.cells[1].source = ConvertCodeToInteractiveNotebookFormat(code);
 
-                File.WriteAllText(outputFilePath, JsonConvert.SerializeObject(notebookObj));
+                File.WriteAllText(outputFilePath, JsonConvert.SerializeObject(notebookObj, Newtonsoft.Json.Formatting.Indented));
             }
             return new ConvertStatus { Status = "Ok" };
         }
@@ -70,8 +70,8 @@ namespace LINQPad_Interactive.Convert.Lib
 
         private static string[] ConvertCodeToInteractiveNotebookFormat(string code)
         {
-            var codeSplit =  code.Split(new string[] {Environment.NewLine}, StringSplitOptions.None);
-            return codeSplit;
+            var codeSplit =  code.Split(new string[] {Environment.NewLine, "\n"}, StringSplitOptions.None);
+            return codeSplit.Select(x=>x+"\n").ToArray();
         }
     }
 }

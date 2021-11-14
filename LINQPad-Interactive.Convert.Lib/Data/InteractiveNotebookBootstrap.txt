@@ -8,5 +8,10 @@ public static void Dump<T>(this T objectToSerialize)
     writer.Write(objectToSerialize);
     string strHTML = writer.ToString();
     
-    display(new HtmlString(strHTML.Replace("background:white","").Replace("background-color:#ddd;","")));
+    display(new HtmlString(strHTML.Replace("background:white","").Replace(";background-color:white","").Replace("background-color:#ddd;","")));
+}
+
+public static void Dump<T>(this T objectToSerialize, string heading)
+{
+    Util.WithHeading(objectToSerialize, heading).Dump();
 }
