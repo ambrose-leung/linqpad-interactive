@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.DotNet.Interactive.Documents;
+using Microsoft.DotNet.Interactive.Documents.Jupyter;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,6 +35,7 @@ namespace LINQPad_Interactive.Convert.Lib
 
             var queryMetadata = GetLinqPadQueryMetadata(xml);
 
+            InteractiveDocument interactiveDoc = new InteractiveDocument();
             var codeForInteractiveNotebook = new StringBuilder();
 
             if (queryMetadata.Kind == "Statements" || queryMetadata.Kind == "Program")
@@ -41,18 +44,24 @@ namespace LINQPad_Interactive.Convert.Lib
 
                 codeForInteractiveNotebook.Append(File.ReadAllText(@"Data\InteractiveNotebookBootstrap.txt"));
 
-                var interactiveNotebook = File.ReadAllText(@"Data\SampleNotebook.ipynb.json");
-                var notebookObj = JsonConvert.DeserializeObject<InternactiveNotebookJson>(interactiveNotebook);
-
-                notebookObj.cells[0].source = ConvertCodeToInteractiveNotebookFormat(codeForInteractiveNotebook.ToString());
+                interactiveDoc.Add(new InteractiveDocumentElement()
+                {
+                    Contents = codeForInteractiveNotebook.ToString(),
+                    Language = "csharp"
+                });
 
                 if(queryMetadata.Kind == "Program")
                 {
                     code = "Main();" + Environment.NewLine + code;
                 }
-                notebookObj.cells[1].source = ConvertCodeToInteractiveNotebookFormat(code);
 
-                File.WriteAllText(outputFilePath, JsonConvert.SerializeObject(notebookObj, Newtonsoft.Json.Formatting.Indented));
+                interactiveDoc.Add(new InteractiveDocumentElement()
+                {
+                    Contents = code,
+                    Language = "csharp"
+                });
+
+                File.WriteAllText(outputFilePath, interactiveDoc.Serialize());
             }
             return new ConvertStatus { Status = "Ok", InputFile = linqPadFilePath, OutputFile = outputFilePath, InitializeCodeFile = Path.GetFullPath(initCodeFilePath) };
 
