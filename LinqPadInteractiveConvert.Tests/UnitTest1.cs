@@ -37,9 +37,15 @@ namespace LinqPadInteractiveConvert.Tests
         }
 
         [TestMethod]
-        public void ConvertToInteractiveNotebook()
+        public void ConvertToInteractiveNotebook_KindStatements()
         {
-            FileConvert.ConvertToInteractiveNotebook(@"C:\Users\amb12\Documents\LINQPad Queries\linq cs statements.linq");
+            FileConvert.ConvertToInteractiveNotebook(@"TestLinqFiles\linq cs statements.linq");
+        }
+
+        [TestMethod]
+        public void ConvertToInteractiveNotebook_KindProgram()
+        {
+            FileConvert.ConvertToInteractiveNotebook(@"TestLinqFiles\linq c# program.linq");
         }
     }
 }

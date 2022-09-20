@@ -11,9 +11,18 @@ namespace LINQPad_Interactive.Convert.Lib
 {
     public class FileConvert
     {
-        public static ConvertStatus ConvertToInteractiveNotebook(string linqPadFilePath, string outputFilePath = null)
+        /// <summary>
+        /// Converts a .linq file to a .ipynb file that can be opened in VSCode
+        /// </summary>
+        /// <param name="linqPadFilePath">Must end with .linq</param>
+        /// <param name="outputFilePath"></param>
+        /// <param name="initCodeFilePath"></param>
+        /// <param name="internalNugetPaths">Ends with .json (or a file path containing nupkg files)</param>
+        /// <returns></returns>
+        public static ConvertStatus ConvertToInteractiveNotebook(string linqPadFilePath, string outputFilePath = null, string initCodeFilePath = @"Data\InteractiveNotebookBootstrap.txt", string[] internalNugetPaths = null)
         {
             outputFilePath = outputFilePath ?? linqPadFilePath.Substring(0, linqPadFilePath.LastIndexOf(".")) + ".ipynb";
+            internalNugetPaths = internalNugetPaths ?? new string[0];
 
             var linqPadFile = File.ReadAllText(linqPadFilePath);
 
@@ -23,11 +32,37 @@ namespace LINQPad_Interactive.Convert.Lib
             var code = fileSplit[1];
 
             var queryMetadata = GetLinqPadQueryMetadata(xml);
-            if (queryMetadata.Kind == "Statements")
-            {
-                var codeForInteractiveNotebook = new StringBuilder();
 
-                foreach(var nugetRef in queryMetadata.NuGetReference)
+            var codeForInteractiveNotebook = new StringBuilder();
+
+            if (queryMetadata.Kind == "Statements" || queryMetadata.Kind == "Program")
+            {
+                AddNugetImports();//add the #r nuget statements at the top
+
+                codeForInteractiveNotebook.Append(File.ReadAllText(@"Data\InteractiveNotebookBootstrap.txt"));
+
+                var interactiveNotebook = File.ReadAllText(@"Data\SampleNotebook.ipynb.json");
+                var notebookObj = JsonConvert.DeserializeObject<InternactiveNotebookJson>(interactiveNotebook);
+
+                notebookObj.cells[0].source = ConvertCodeToInteractiveNotebookFormat(codeForInteractiveNotebook.ToString());
+
+                if(queryMetadata.Kind == "Program")
+                {
+                    code = "Main();" + Environment.NewLine + code;
+                }
+                notebookObj.cells[1].source = ConvertCodeToInteractiveNotebookFormat(code);
+
+                File.WriteAllText(outputFilePath, JsonConvert.SerializeObject(notebookObj, Newtonsoft.Json.Formatting.Indented));
+            }
+            return new ConvertStatus { Status = "Ok", InputFile = linqPadFilePath, OutputFile = outputFilePath, InitializeCodeFile = Path.GetFullPath(initCodeFilePath) };
+
+            void AddNugetImports()
+            {
+                foreach (var internalNugetPath in internalNugetPaths)
+                {
+                    codeForInteractiveNotebook.Append($"#i \"nuget:{internalNugetPath}\"").Append(Environment.NewLine);
+                }
+                foreach (var nugetRef in queryMetadata.NuGetReference)
                 {
                     if (nugetRef.Version == null)
                     {
@@ -38,18 +73,7 @@ namespace LINQPad_Interactive.Convert.Lib
                         codeForInteractiveNotebook.Append($"#r \"nuget:{nugetRef.Value}, {nugetRef.Version}\"").Append(Environment.NewLine);
                     }
                 }
-                codeForInteractiveNotebook.Append(File.ReadAllText(@"Data\InteractiveNotebookBootstrap.txt"));
-
-                var interactiveNotebook = File.ReadAllText(@"Data\SampleNotebook.ipynb.json");
-                var notebookObj = JsonConvert.DeserializeObject<LINQPad_Interactive.Convert.Lib.InternactiveNotebookJson>(interactiveNotebook);
-
-
-                notebookObj.cells[0].source = ConvertCodeToInteractiveNotebookFormat(codeForInteractiveNotebook.ToString());
-                notebookObj.cells[1].source = ConvertCodeToInteractiveNotebookFormat(code);
-
-                File.WriteAllText(outputFilePath, JsonConvert.SerializeObject(notebookObj, Newtonsoft.Json.Formatting.Indented));
             }
-            return new ConvertStatus { Status = "Ok" };
         }
 
         /// <summary>
