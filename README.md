@@ -1,7 +1,7 @@
 # linqpad-interactive
-Convert .linq to .ipynb so that you can run your LINQPad scripts in VSCode
+Convert .linq to .ipynb so that you can run your [LINQPad](https://www.linqpad.net/) scripts in VSCode
 
-Proof of concept code for converting LinqPad scripts to .ipynb
+This is currently in the "Proof of concept" stage
 
 # Usage
 (Create .ipynb file)
