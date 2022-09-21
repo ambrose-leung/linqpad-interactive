@@ -5,6 +5,7 @@ on:
       - main # Default release branch, may also be named 'master' or 'develop'
 jobs:
   publish:
+    environment: Nuget-Prod
     name: build, pack & publish
     runs-on: ubuntu-latest
     steps:
