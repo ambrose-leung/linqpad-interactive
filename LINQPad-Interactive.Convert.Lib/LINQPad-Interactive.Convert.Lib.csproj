@@ -6,6 +6,8 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	  <PackageOutputPath>../../build/nupkg</PackageOutputPath>
 	  <Version>1.0.1</Version>
+	  <Authors>Ambrose Leung</Authors>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

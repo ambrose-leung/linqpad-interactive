@@ -21,6 +21,7 @@
     <RepositoryUrl></RepositoryUrl>
     <PackageProjectUrl>https://github.com/ambrose-leung/linqpad-interactive</PackageProjectUrl>
     <Version>1.0.1-beta</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     
 </PropertyGroup>
 
@@ -40,6 +41,10 @@
 
   <ItemGroup>
     <None Remove="..\..\build\bin\Ambrose.Linqpad.Convert.KernelExt\netcoreapp3.1\/Ambrose.Linqpad.Convert.KernelExt.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="..\..\build\bin\Ambrose.Linqpad.Convert.KernelExt\net5.0\/Ambrose.Linqpad.Convert.KernelExt.dll" />
   </ItemGroup>
 
   <ItemGroup>
