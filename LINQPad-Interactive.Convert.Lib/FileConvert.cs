@@ -42,7 +42,31 @@ namespace LINQPad_Interactive.Convert.Lib
             {
                 AddNugetImports();//add the #r nuget statements at the top
 
-                codeForInteractiveNotebook.Append(File.ReadAllText(@"Data\InteractiveNotebookBootstrap.txt"));
+                if (File.Exists(initCodeFilePath))
+                {
+                    codeForInteractiveNotebook.Append(File.ReadAllText(@"Data\InteractiveNotebookBootstrap.txt"));
+                }
+                else
+                {
+                    codeForInteractiveNotebook.Append(@"#r ""nuget: LINQPad.Runtime""
+using LINQPad;
+using Microsoft.AspNetCore.Html;
+
+public static void Dump<T>(this T objectToSerialize)
+{
+    var writer = LINQPad.Util.CreateXhtmlWriter(true);
+    writer.Write(objectToSerialize);
+    string strHTML = writer.ToString();
+
+    display(new HtmlString(strHTML.Replace(""background:white"", """").Replace("";background-color:white"", """").Replace(""background-color:#ddd;"", """")));
+}
+
+public static void Dump<T>(this T objectToSerialize, string heading)
+{
+    Util.WithHeading(objectToSerialize, heading).Dump();
+}
+");
+                }
 
                 interactiveDoc.Add(new InteractiveDocumentElement()
                 {
@@ -99,12 +123,6 @@ namespace LINQPad_Interactive.Convert.Lib
                 q = (LinqPad.Query)ser.Deserialize(reader);
             }
             return q;
-        }
-
-        private static string[] ConvertCodeToInteractiveNotebookFormat(string code)
-        {
-            var codeSplit =  code.Split(new string[] {Environment.NewLine, "\n"}, StringSplitOptions.None);
-            return codeSplit.Select(x=>x+"\n").ToArray();
         }
     }
 }

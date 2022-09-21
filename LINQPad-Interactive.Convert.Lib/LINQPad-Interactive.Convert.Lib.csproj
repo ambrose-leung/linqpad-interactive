@@ -3,6 +3,9 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>LINQPad_Interactive.Convert.Lib</RootNamespace>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	  <PackageOutputPath>../../build/nupkg</PackageOutputPath>
+	  <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,9 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Data\InteractiveNotebookBootstrap.txt">
+    <EmbeddedResource Include="Data\InteractiveNotebookBootstrap.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
     <Content Include="Data\SampleNotebook.ipynb.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -35,6 +38,10 @@
   <ItemGroup>
     <Compile Update="ConvertStatus.cs">
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

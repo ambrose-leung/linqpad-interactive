@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Ambrose.Linqpad.Convert.KernelExt</AssemblyName>
+    <TargetFramework>net5.0</TargetFramework>
+    <IncludeBuildOutput>true</IncludeBuildOutput>
+    <IsPackable>true</IsPackable>
+    <PackageDescription>.NET kernel extensions for Jupyter notbook</PackageDescription>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>Ambrose.Linqpad.Convert.KernelExt</PackageId>
+    <Authors>Ambrose Leung</Authors>
+    <Company></Company>
+    <Product>.NET kernel extension for .net interactive notebooks - convert Linqpad</Product>
+    <PackageOutputPath>../../build/nupkg</PackageOutputPath>
+    <AssemblyVersion>1.0.4.0</AssemblyVersion>
+    <FileVersion>1.0.4.0</FileVersion>
+    <VersionPrefix>1.0.4</VersionPrefix>
+    <VersionSuffix>alpha</VersionSuffix>
+    <OutputPath>..\..\build\bin\$(AssemblyName)</OutputPath>
+    <RepositoryUrl></RepositoryUrl>
+    <PackageProjectUrl>https://github.com/ambrose-leung/linqpad-interactive</PackageProjectUrl>
+    <Version>1.0.1-beta</Version>
+    
+</PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="bin\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <None Remove="bin\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="..\..\build\bin\Ambrose.Linqpad.Convert.KernelExt\netcoreapp3.1\/Ambrose.Linqpad.Convert.KernelExt.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="..\..\build\bin\Ambrose.Linqpad.Convert.KernelExt\netcoreapp3.1\/Ambrose.Linqpad.Convert.KernelExt.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="..\..\build\bin\Ambrose.Linqpad.Convert.KernelExt\netcoreapp3.1\/Ambrose.Linqpad.Convert.KernelExt.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="$(OutputPath)/$(AssemblyName).dll" Pack="true" PackagePath="interactive-extensions/dotnet" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LINQPad-Interactive.Convert.Lib\LINQPad-Interactive.Convert.Lib.csproj" />
+  </ItemGroup>
+
+
+</Project>
