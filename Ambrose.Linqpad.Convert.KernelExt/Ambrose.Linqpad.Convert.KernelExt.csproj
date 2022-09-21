@@ -20,7 +20,7 @@
     <OutputPath>..\..\build\bin\$(AssemblyName)</OutputPath>
     <RepositoryUrl></RepositoryUrl>
     <PackageProjectUrl>https://github.com/ambrose-leung/linqpad-interactive</PackageProjectUrl>
-    <Version>1.0.1-beta</Version>
+    <Version>1.1.0</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     
 </PropertyGroup>

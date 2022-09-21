@@ -12,7 +12,7 @@ namespace Ambrose.Linqpad.Convert.KernelExt
 {
     public class ConvertLinqpadExtension : IKernelExtension
     {
-        const string MAGIC_CMD = "#!convertlinqpad";
+        const string MAGIC_CMD = "#!convert2dnn";
         static Command importCommand;
 
         static string[] SUPPORTED_LANGUAGES = { "csharp","fsharp","javascript", "pwsh" };
