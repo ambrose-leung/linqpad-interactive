@@ -1,12 +1,10 @@
 # LINQPad ➡️ .NET Notebook
 Convert .linq to .ipynb so that you can run your [LINQPad](https://www.linqpad.net/) scripts in VSCode.  
 
-This is currently in the "Proof of concept" stage
-
 # Usage
 
 ## Convert from VS Code
-Install Extension from VS Code Extensions Marketplace, open linqpad file, right click and choose Convert
+Install Extension from VS Code Extensions Marketplace (Search for 'LinqPad Script to .NET Notebook'), open linqpad file, right click in editor and choose Convert
 ![Open .linq file, Right click editor, Convert](https://github.com/ambrose-leung/vscode-ext-convert2dnn/blob/main/ExampleUsage.gif)
 
 [Repo for extension](https://github.com/ambrose-leung/vscode-ext-convert2dnn)
@@ -35,4 +33,5 @@ Cell 2 (Requires the path to the .linq file to be entered manually)
 - Implements IKernelExtension to expose the magic command #!convert2dnn
 
 # Backlog and Feature Requests
-Go to Issues tab
+- Go to Issues tab
+- This is currently in the "Proof of concept" stage and may not be actively developed
