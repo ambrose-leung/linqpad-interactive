@@ -26,6 +26,12 @@ namespace LINQPad_Interactive.Convert.Lib
         public static ConvertStatus ConvertToInteractiveNotebook(string linqPadFilePath, string outputFilePath = null, string[] internalNugetPaths = null)
         {
             outputFilePath = outputFilePath ?? linqPadFilePath.Substring(0, linqPadFilePath.LastIndexOf(".")) + ".ipynb";
+
+            if (File.Exists(outputFilePath))
+            {
+                return new ConvertStatus { Status = "Output File Already Exists - operation canceled", InputFile = linqPadFilePath, OutputFile = outputFilePath };
+            }
+
             internalNugetPaths = internalNugetPaths ?? new string[0];
 
             var linqPadFile = File.ReadAllText(linqPadFilePath);
