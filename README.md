@@ -4,7 +4,7 @@ Convert .linq to .ipynb so that you can run your [LINQPad](https://www.linqpad.n
 # Usage
 
 ## Convert from VS Code
-Install Extension from VS Code Extensions Marketplace (Search for 'LinqPad Script to .NET Notebook'), open linqpad file, right click in editor and choose Convert
+[Install Extension ](https://marketplace.visualstudio.com/items?itemName=AmbroseLeung.linqpad2dnn) from VS Code Extensions Marketplace (or search for 'LinqPad Script to .NET Notebook' in VS Code), open linqpad file, right click in editor and choose Convert
 ![Open .linq file, Right click editor, Convert](https://github.com/ambrose-leung/vscode-ext-convert2dnn/blob/main/ExampleUsage.gif)
 
 [Repo for extension](https://github.com/ambrose-leung/vscode-ext-convert2dnn)
