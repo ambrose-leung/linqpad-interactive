@@ -47,5 +47,11 @@ namespace LinqPadInteractiveConvert.Tests
         {
             FileConvert.ConvertToInteractiveNotebook(@"TestLinqFiles\linq c# program.linq");
         }
+
+        [TestMethod]
+        public void ConvertToInteractiveNotebook_Test()
+        {
+            FileConvert.ConvertToInteractiveNotebook(@"C:\Source\Repos\OSRChecks\Slyther.LINQPad\ADO\Util - download repo url with access token.linq");
+        }
     }
 }

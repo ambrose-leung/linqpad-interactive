@@ -11,15 +11,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Data\InteractiveNotebookBootstrap.txt" />
     <None Remove="Data\SampleNotebook.ipynb.json" />
     <None Remove="SampleNotebook.ipynb" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Data\InteractiveNotebookBootstrap.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
     <Content Include="Data\SampleNotebook.ipynb.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
