@@ -4,7 +4,14 @@ Convert .linq to .ipynb so that you can run your [LINQPad](https://www.linqpad.n
 This is currently in the "Proof of concept" stage
 
 # Usage
-## Current User Experience
+
+## Convert from VS Code
+Install Extension from VS Code Extensions Marketplace, open linqpad file, right click and choose Convert
+![Open .linq file, Right click editor, Convert](https://github.com/ambrose-leung/vscode-ext-convert2dnn/blob/main/ExampleUsage.gif)
+
+[Repo for extension](https://github.com/ambrose-leung/vscode-ext-convert2dnn)
+
+## Convert from .NET notebook
 User creates .ipynb and runs 2 cells of C# code
 New .ipynb is generated and opened in VS Code (on Windows).
 
@@ -20,8 +27,6 @@ Cell 2 (Requires the path to the .linq file to be entered manually)
 ```
 #!convert2dnn "C:\path\to\linqpadscript.linq" //dnn = Dot Net Notebook
 ```
-## Ideal User Experience
-User installs VS Code extension, opens .linq file, chooses command to convert (Ctrl+Shift+P), New .ipynb is generated and opened in VS Code.
 
 # Technical
 - Uses [`Microsoft.DotNet.Interactive.Documents`](https://www.nuget.org/packages/Microsoft.DotNet.Interactive.Documents/) nuget to create .ipynb
