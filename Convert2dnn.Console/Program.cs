@@ -9,7 +9,7 @@ namespace Convert2dnn_Console
         {
             if (args.Length > 0) {
                 var status = FileConvert.ConvertToInteractiveNotebook(args[0]);
-                Console.WriteLine(status);
+                Console.WriteLine(status.Status);
             }
 
             else
