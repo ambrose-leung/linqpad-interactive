@@ -37,7 +37,16 @@ namespace LINQPad_Interactive.Convert.Lib
             var linqPadFile = File.ReadAllText(linqPadFilePath);
 
             //get xml part
-            var fileSplit = linqPadFile.Split(new string[] { "\r\n\r\n" }, 2, StringSplitOptions.None);
+            var fileSplit = linqPadFile.Split(new string[] { $"{Environment.NewLine}{Environment.NewLine}" }, 2, StringSplitOptions.None);
+            if (fileSplit.Length != 2)
+            {
+                fileSplit = linqPadFile.Split(new string[] { "\r\n\r\n" }, 2, StringSplitOptions.None);
+            }
+            if (fileSplit.Length != 2)
+            {
+                Console.WriteLine("Error: could not split .linq file by 2 new lines.");
+                return new ConvertStatus { Status = "Error: could not split .linq file by 2 new lines.", InputFile = linqPadFilePath, OutputFile = "" };
+            }
             var xml = fileSplit[0];
             var code = fileSplit[1];
 
