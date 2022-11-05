@@ -1,11 +1,5 @@
 <Query Kind="Program">
-  <NuGetReference>FlysEngine.Desktop</NuGetReference>
-  <NuGetReference Version="0.9.1">Rock.Core.Newtonsoft</NuGetReference>
-  <Namespace>Rock.Serialization</Namespace>
-  <Namespace>SharpDX.Mathematics.Interop</Namespace>
-  <Namespace>SharpDX.Multimedia</Namespace>
-  <Namespace>SharpDX.Text</Namespace>
-  <Namespace>SharpDX.Win32</Namespace>
+
 </Query>
 
 void Main()

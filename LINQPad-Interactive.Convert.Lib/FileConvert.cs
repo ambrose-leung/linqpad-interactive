@@ -26,6 +26,7 @@ namespace LINQPad_Interactive.Convert.Lib
         public static ConvertStatus ConvertToInteractiveNotebook(string linqPadFilePath, string outputFilePath = null, string[] internalNugetPaths = null)
         {
             outputFilePath = outputFilePath ?? linqPadFilePath.Substring(0, linqPadFilePath.LastIndexOf(".")) + ".ipynb";
+            var linqpadFileDir=Path.GetDirectoryName(outputFilePath);
 
             if (File.Exists(outputFilePath))
             {
@@ -67,11 +68,23 @@ namespace LINQPad_Interactive.Convert.Lib
                 
                 var usingStatements = ParseNamespacesGetUsingStatements(queryMetadata);
                 usingStatements = usingStatements.Append($"using LINQPad;{Environment.NewLine}using Microsoft.AspNetCore.Html;");
+                
 
                 
                 codeForInteractiveNotebook.AppendLine(string.Join(Environment.NewLine, nugetImports));
+
+                var loadExternalScriptStatements = ParseCodeGetLoadStatements(code);
+                if (loadExternalScriptStatements.Any())
+                {
+                    interactiveDoc.Add(new InteractiveDocumentElement()
+                    {
+                        Contents = string.Join(Environment.NewLine, loadExternalScriptStatements.Select(x => $"#!import \"{x}\"")),
+                        Language = "csharp"
+                    });
+                }
                 codeForInteractiveNotebook.AppendLine(string.Join(Environment.NewLine, usingStatements));
-                
+
+
                 codeForInteractiveNotebook.Append(@"public static T Dump<T>(this T objectToSerialize)
 {
     var writer = LINQPad.Util.CreateXhtmlWriter(true);
@@ -88,6 +101,7 @@ public static T Dump<T>(this T objectToSerialize, string heading)
     return objectToSerialize;
 }
 ");
+                
 
                 interactiveDoc.Add(new InteractiveDocumentElement()
                 {
@@ -107,7 +121,7 @@ public static T Dump<T>(this T objectToSerialize, string heading)
 
                 interactiveDoc.Add(new InteractiveDocumentElement()
                 {
-                    Contents = code,
+                    Contents = RemoveLoadStatements(code),
                     Language = "csharp"
                 });
 
@@ -116,6 +130,47 @@ public static T Dump<T>(this T objectToSerialize, string heading)
             return new ConvertStatus { Status = "Ok", InputFile = linqPadFilePath, OutputFile = outputFilePath };
 
             
+        }
+
+        private static string RemoveLoadStatements(string code)
+        {
+            StringBuilder retval = new StringBuilder();
+            foreach(var c in code.Split(Environment.NewLine))
+            {
+                if (c.StartsWith("#load")) { }
+                else
+                {
+                    retval.AppendLine(c);
+                }
+            }
+            return retval.ToString();
+        }
+
+        /// <summary>
+        /// return the paths that are '#load'ed
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        private static IEnumerable<string> ParseCodeGetLoadStatements(string code)
+        {
+            var lines = code.Split(Environment.NewLine);
+
+            foreach(var line in lines)
+            {
+                var lineTrimmed = line.TrimStart();
+                if (lineTrimmed.StartsWith("#load"))
+                {
+                    yield return line.Replace("#load","").TrimStart().Trim('"');
+                }
+                else if(string.IsNullOrEmpty(lineTrimmed) || lineTrimmed.StartsWith("//"))
+                {
+                    //ignore these lines
+                }
+                else
+                {
+                    break;
+                }
+            }
         }
 
         private static IEnumerable<string> ParseNamespacesGetUsingStatements(Query queryMetadata)

@@ -32,4 +32,10 @@
     <ProjectReference Include="..\LINQPad-Interactive.Convert.Lib\LINQPad-Interactive.Convert.Lib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TestLinqFiles\import test.linq">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
